@@ -26,7 +26,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       buttonName:"抢购",
-      actEndTime: '2020-07-04 20:04:00',
+      actEndTime: '2020-07-05 11:48:00',
       canClick: false,
       imageSrc:''
     }
@@ -40,8 +40,9 @@ export default {
       return param < 10 ? '0' + param : param;
     },
     buy:function(){
-      axios.post('http://localhost:9501/sec_kill/buy ',{
-        id:1
+      let _this = this;
+      axios.post('http://seckill.cn:81/sec_kill/buy ',{
+        id:5
       },
         {
           headers:{Authorization:this.$store.state.Authorization}
@@ -50,7 +51,15 @@ export default {
         let res = response.data;
         if(res.code == 0){
           alert(res.msg);
-          this.finish();
+          axios.get('http://seckill.cn:81/sec_kill/getSeckillInfo', {
+            params: { 'goods_id': 5 },
+            headers:{Authorization:_this.$store.state.Authorization}
+          }).then(function (response) {
+            console.log(response.data);
+            }).catch(function (error) {
+            alert(error);
+          });
+          _this.finish();
         }else {
           alert(res.msg);
         }

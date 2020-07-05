@@ -23,7 +23,7 @@
           login:function () {
             let _this = this;
               console.log("submit login.")
-            axios.post('http://localhost:9501/user/login', {
+            axios.post('http://seckill.cn:81/user/login', {
               username: this.username,
               password: this.password
             }).then(function (response) {
